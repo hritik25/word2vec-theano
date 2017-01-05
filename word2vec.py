@@ -138,7 +138,7 @@ for i in range(batchSize):
     matchScore = T.dot(targetEmbeddings[targetContext[i][0],:], contextEmbeddings[:,targetContext[i][1]])
     batchMatchScores.append(matchScore)
 
-objective = isContext*T.log(T.nnet.sigmoid(batchMatchScores)) +                 (1 - isContext)*T.log(1-T.nnet.sigmoid(batchMatchScores))
+objective = isContext*T.log(T.nnet.sigmoid(batchMatchScores)) + (1 - isContext)*T.log(1-T.nnet.sigmoid(batchMatchScores))
 
 loss = -T.mean(objective)
 
@@ -152,15 +152,17 @@ numberOfBatches = len(data)/(positiveSampleSize/(2*skipWindow))
 ######################
 ### BEGIN TRAINING ###
 ######################
+NUMBER_OF_EPOCHS = 10
 print 'training start...'
 print 'Total Number of Batches = ', numberOfBatches
-for i in range(numberOfBatches):
-    batch, labels = generateBatch(positiveSampleSize, skipWindow, kNegativeSamples)
-    batch = np.asarray(batch, dtype = np.uint16)
-    labels = np.asarray(labels, dtype = np.int8)
-    trainBatch(batch, labels)
-    if i%1000 == 0:    
-        print 'Batch {0} complete.'.format(i)
+for epoch in range(NUMBER_OF_EPOCHS):
+    for i in range(numberOfBatches):
+        batch, labels = generateBatch(positiveSampleSize, skipWindow, kNegativeSamples)
+        batch = np.asarray(batch, dtype = np.uint16)
+        labels = np.asarray(labels, dtype = np.int8)
+        trainBatch(batch, labels)
+        if i%1000 == 0:    
+            print 'Batch {0} complete.'.format(i)
 print 'training complete...'
 
 # Save the word embeddings
