@@ -8,15 +8,15 @@ I referred to the following resources for developing concepts:<br>
 The model I use here is Skip-Gram ( Section 3.2 in Mikolov et al. ). Further, the technique used for optimizing computational efficiency is Negative Sampling, the other option being Hierarchical Softmax which tends to be more complicated. Thanks to Edward Newell's <a href="http://cgi.cs.mcgill.ca/~enewel3/posts/implementing-word2vec/">blogpost</a> for a highly intuitive explaination. Here's the summary:<br>
 
 1. word2vec is based on two assumptions:
-
-  1. **distributional hypothesis** : meanings can be learned from the likely neighboring words.
-
-  2. **meanings can be encoded in vectors**, and words with similar meanings should get similar vectors for example.
+<ul>
+<li><b>distributional hypothesis</b> : meanings can be learned from the likely neighboring words.
+<li><b>meanings can be encoded in vectors</b>, and words with similar meanings should get similar vectors for example.
+</ul>
 
 2. The learning objective and the Negative Sampling approach of word2vec is based on _Noise-Contrastive Estimation_. The idea is that we can learn a distribution by learning to distinguish it from other distributions. A _signal_ is defined as a pair(query-word, context-word) and _noise_ is defined as a pair(query-word, random-word). The signals are drawn from the natural distribution in the corpus, p(w,c) and the noises are drawn from some other distribution, p'(w,c). Let C indicate the truth value that a particular query-context pair \<w,c> is drawn from the natural distribution p(w,c), i.e C=1 if Yes and C=0 if No. So, Noise Contrastive approach will learn to model the probability:
 > p(C=1 | w,c)
 
-4. This can be converted to a supervised learning probem by first defining the 'match-score' as:
+3. This can be converted to a supervised learning probem by first defining the 'match-score' as:
 > p(C=1 | w,c) = σ(vw.vc)
 
 where vw and vc are the word embedding vectors of w and c respectively and σ is the sigmoid function, and then defining the training objective as the cross-entropy loss:
