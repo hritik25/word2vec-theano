@@ -32,7 +32,7 @@ I have trained my model on the The Harry Potter Series and it can be run from th
 
 'ron'
 
-`mostSimilar('dumbledoe')`
+`mostSimilar('dumbledore')`
 
 'snape'
 
